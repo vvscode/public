@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Design для Frontend разработчиков&raquo;</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/.reveal-md/styles.css" />
+
+
+    <script>
+      document.write(
+        '<script src="http://' +
+          (location.host || 'localhost').split(':')[0] +
+          ':35729/livereload.js?snipver=1"></' +
+          'script>'
+      );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section ><section data-markdown><script type="text/template">
+
+## System Design для Frontend разработчиков
+
+### Что&nbsp;/ Зачем&nbsp;/ Как?
+
+</script></section><section data-markdown><script type="text/template">
+
+<strong>System design</strong>&nbsp;&mdash; это проектирование того, как устроена программа:
+<ul>
+<li>из&nbsp;каких частей она состоит</li>
+<liкак они взаимодействуют</li>
+<li>почему выбраны именно такие технологии и&nbsp;решения</li>
+</ul>
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+### Василий Ванчук
+
+### @vvscode
+
+</script></section><section data-markdown><script type="text/template">
+<ul>
+<li>кандидат-разрядник, несколько лет подряд брал планку в&nbsp;120 собеседований</li>
+<li>активный интервьюер (100 собеседований в&nbsp;год для компаний Bolt и&nbsp;Т-Банк)</li>
+<li>собеседую спикеров на&nbsp;HolyJS</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### Личный опыт
+
+<ul>
+<li class="fragment"><strong>EPAM, Минск (2018)</strong>&nbsp;&mdash; первая встреча с&nbsp;секцией при обсуждении новостного сайта</li>
+<li class="fragment"><strong>Яндекс, Авито</strong>&nbsp;&mdash; секции системного дизайна</li>
+<li class="fragment"><strong>Bolt</strong>&nbsp;&mdash; проходил, а&nbsp;позже лидил секцию для фронтендщиков и&nbsp;фуллстеков</li>
+<li class="fragment"><strong>Т-Банк</strong>&nbsp;&mdash; и&nbsp;кандидат, и&nbsp;интервьюер</li>
+</ul>
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## О&nbsp;чем сегодня поговорим
+
+<ul>
+<li class="fragment"> Что это за&nbsp;секция интервью и&nbsp;где ее&nbsp;можно встретить </li>
+<li class="fragment"> Почему &laquo;на&nbsp;скилле&raquo; не&nbsp;вывезти </li>
+<li class="fragment"> Зачем это вам, если вы&nbsp;не&nbsp;архитектор </li>
+<li class="fragment"> На&nbsp;что смотрят интервьюеры </li>
+<li class="fragment"> Как прокачаться, даже делая лендинги </li>
+<li class="fragment"> Частые ошибки кандидатов </li>
+<li class="fragment"> Материалы для подготовки </li>
+</ul>
+</script></section><section ><section data-markdown><script type="text/template">
+
+## Что это за&nbsp;секция?
+
+</script></section><section data-markdown><script type="text/template">
+
+<div class="fragment">
+Про способность <strong>проектировать</strong>, а&nbsp;не&nbsp;только писать код. 
+
+Она оценивает: <br />
+
+<ul>
+<li>как вы&nbsp;собираете требования</li>
+<li>выбираете технологии</li>
+<li>обосновываете решения</li>
+<li>предвидите будущие проблемы</li>
+</ul>
+</div>
+
+</script></section><section data-markdown><script type="text/template">
+
+### Где можно встретить:
+
+🇺🇸 Google 🇺🇸 Meta/Facebook 🇺🇸 Amazon 🇺🇸 Apple 🇺🇸 Netflix 🇺🇸 Microsoft 🇺🇸 Uber 🇺🇸 Airbnb 🇺🇸 Stripe 🇺🇸 Dropbox 🇺🇸 Lyft 🇧🇾 EPAM Systems 🇷🇺 Яндекс 🇷🇺 Авито 🇷🇺 Т-Банк 🇷🇺 VK 🇷🇺 Ozon 🇪🇪 Bolt 🇳🇱 Booking.com 🇳🇱 Adyen 🇸🇪 Spotify 🇸🇪 Klarna 🇩🇪 Zalando 🇬🇧 Revolut
+
+</script></section><section data-markdown><script type="text/template">
+
+## Почему &laquo;на&nbsp;скилле&raquo; не&nbsp;вывезти?
+
+</script></section><section data-markdown><script type="text/template">
+
+### Аналогия&nbsp;с [TOEFL](https://magoosh.com/toefl/toefl-tuesday-do-native-speakers-get-perfect-scores-on-the-toefl/)
+
+**Можно быть native speaker, но&nbsp;провалить экзамен**
+
+<ul>
+<li class="fragment"> не&nbsp;знаете формат</li>
+<li class="fragment"> не&nbsp;понимаете ожиданий</li>
+<li class="fragment"> нет подготовки к&nbsp;специфике теста</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### Собеседование &ne; Реальная работа
+
+</script></section><section data-markdown><script type="text/template">
+
+**В&nbsp;работе:**
+
+<ul>
+<li>есть время на&nbsp;исследование</li>
+<li>можно консультироваться с&nbsp;коллегами</li>
+<li>итеративный подход</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**На&nbsp;интервью:**
+
+<ul>
+<li>ограниченное время (45-60&nbsp;минут)</li>
+<li>нужно показать мыслительный процесс</li>
+<li>формат whiteboarding</li>
+</ul>
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Зачем это мне? Я&nbsp;ж не&nbsp;архитектор
+
+</script></section><section data-markdown><script type="text/template">
+
+### Кто проходит эту секцию?
+
+<ul>
+<li class="fragment">Senior/Lead</li>
+<li class="fragment">Middle+</li>
+<li class="fragment">Junior</li>
+</ul>
+
+</script></section><section data-markdown><script type="text/template">
+
+System Design про:
+<ul>
+<li>картину целиком</li>
+<li>осознанные решения</li>
+<li>умение объяснять их</li>
+<li>быстро адаптироваться к&nbsp;новым проектам и&nbsp;работать в&nbsp;команде</li>
+</ul>
+<!-- Это универсальные умения, которые пригодятся в любом техническом интервью и в реальной разработке. -->
+
+</script></section><section data-markdown><script type="text/template">
+
+### Вес в&nbsp;финальной оценке
+
+**Самый большой вес среди всех секций!**
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+### Что проверяется через System Design
+
+<ul>
+<li class="fragment">комплексные навыки</li>
+<li class="fragment">опыт с&nbsp;разных сторон</li>
+<li class="fragment">подход к&nbsp;решению новых задач</li>
+<li class="fragment">коммуникационные навыки</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**Результат:** Профиль сильных и&nbsp;слабых сторон
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## На&nbsp;что смотрят в&nbsp;процессе
+
+</script></section><section data-markdown><script type="text/template">
+
+### 1. Сбор требований
+
+<strong class="fragment">Что проверяем:</strong>
+
+<ul>
+<li class="fragment">работа с&nbsp;нечеткой спецификацией</li>
+<li class="fragment">сбор функциональных требований</li>
+<li class="fragment">выявление нефункциональных требований</li>
+<li class="fragment">оценка ограничений</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**Как проверяем:**
+
+Поверхностное описание + скриншот &rarr; детализация требований
+
+</script></section><section data-markdown><script type="text/template">
+
+### 2. Технический кругозор<!-- .element: class="fragment" -->
+
+**Что проверяем:**<!-- .element: class="fragment" -->
+
+<ul>
+<li class="fragment">выбор подходящих технологий</li>
+<li class="fragment">знание альтернатив</li>
+<li class="fragment">обоснование решений</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**Как проверяем:**
+Выбор стека для всей системы и&nbsp;ее&nbsp;частей (не&nbsp;только frontend)
+
+</script></section><section data-markdown><script type="text/template">
+
+### 3. Верхнеуровневый дизайн
+
+<strong class="fragment">Что проверяем:</strong>
+
+<ul>
+<li class="fragment">описание компонентов системы<sup>*</sup></li>
+<li class="fragment">взаимодействие между компонентами</li>
+<li class="fragment">понимание границ ответственности</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**Как проверяем:**
+Схематическое изображение системы целиком
+
+</script></section><section data-markdown><script type="text/template">
+
+### 4. Архитектура приложения
+
+<strong class="fragment">Что проверяем:</strong>
+
+<ul>
+<li class="fragment">компонентная структура</li>
+<li class="fragment">разделение на&nbsp;уровни</li>
+<li class="fragment">проектирование API</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**Как проверяем:**
+Детализация одной страницы + API дизайн
+
+</script></section><section data-markdown><script type="text/template">
+
+### 5. Производительность<sup>\*</sup>
+
+**Что проверяем:**<!-- .element: class="fragment" -->
+
+<ul>
+<li class="fragment">определение узких мест</li>
+<li class="fragment">подходы к&nbsp;оптимизации</li>
+<li class="fragment">методы тестирования</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**Как проверяем:**
+
+<ul>
+<li>анализ bottlenecks</li>
+<li>стратегии кэширования</li>
+<li>опыт с&nbsp;реальными задачами</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### 6. Безопасность<sup>\*</sup>
+
+**Что проверяем:**
+
+<ul>
+<li>выявление уязвимостей</li>
+<li>знание базовых принципов</li>
+<li>практический опыт</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**Как проверяем:**
+
+<ul>
+<li>OWASP Top 10&nbsp;для фронтенда</li>
+<li>XSS, CSRF, CSP</li>
+<li>аутентификация и&nbsp;авторизация</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### Дополнительные темы<sup>\*</sup>
+
+<ul>
+<li>Accessibility (a11y)</li>
+<li>Internationalization (i18n)</li>
+<li>SEO оптимизация</li>
+<li>Progressive Web Apps</li>
+<li>Micro Frontends</li>
+</ul>
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Область проектирования
+
+</script></section><section data-markdown><script type="text/template">
+
+### Что входит в&nbsp;System Design?
+
+<ul>
+<li class="fragment">организация репозиториев</li>
+<li class="fragment">выбор технологий и&nbsp;библиотек</li>
+<li class="fragment">определение процесса деплоя</li>
+<li class="fragment">стратегия тестирования</li>
+<li class="fragment">дизайн API</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### Метафора
+
+![Картина с&nbsp;ограниченным полем](https://news.itmo.ru/images/news/big/p12881.jpg)
+
+</script></section><section data-markdown><script type="text/template">
+
+**Вся система = картина**
+
+<ul>
+<li class="fragment">ограниченное время</li>
+<li class="fragment">формат интервью</li>
+<li class="fragment">движение и&nbsp;масштаб &laquo;кружка&raquo; зависит от&nbsp;обеих сторон</li>
+<li class="fragment">почти никогда не&nbsp;охватываем картину целиком</li>
+</ul>
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Как прокачаться, даже делая лендинги
+
+</script></section><section data-markdown><script type="text/template">
+
+### Методика &laquo;50&nbsp;ветвлений&raquo;
+
+<ul>
+<li class="fragment">знать точки выбора</li>
+<li class="fragment">понимать альтернативы</li>
+<li class="fragment">yметь обосновать решение</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+#### Шаг&nbsp;1: Анализ существующего приложения
+
+<div class="fragment">Описать 50+&nbsp;решений в&nbsp;существующем приложении</div>
+
+</script></section><section data-markdown><script type="text/template">
+
+#### Шаг&nbsp;2: Для каждой точки определить
+
+<ul>
+<li>какую проблему решает</li>
+<li>2-3 альтернативы</li>
+<li>критерии выбора</li>
+</ul>
+
+</script></section><section data-markdown><script type="text/template">
+
+<strike><strong>Р</strong></strike>решения
+
+<strike><strong>П</strong></strike>проблемы
+
+<!-- Типичная ошибка в этом упражнении думать про Проблемы и Решенеия, а не про  -->
+
+</script></section><section data-markdown><script type="text/template">
+
+### Примеры точек ветвления для лендинга
+
+<ul>
+<li>как раскладывать файлы и&nbsp;папки</li>
+<li>какие библиотеку подключать</li>
+<li>система сборки приложения</li>
+<li>куда деплоить</li>
+<li>как деплоить</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+[Варианты точек для Landing Page](https://docs.google.com/spreadsheets/d/1P7S29zjmWdhfRqEmZNzBUBQIFT6X4nLRy5aWyjxKOnk/edit?gid=1431647587#gid=1431647587)
+
+</script></section><section data-markdown><script type="text/template">
+
+### Шаг&nbsp;3: Формулирование вопросов
+
+<div class="fragment">
+
+<strong>Для выбора сборщика:</strong>
+
+<ul>
+<li>какой размер проекта?</li>
+<li>нужна&nbsp;ли кастомная конфигурация?</li>
+<li>критична&nbsp;ли скорость разработки?</li>
+<li>планируется&nbsp;ли масштабирование?</li>
+<li>что нужно от&nbsp;сборщика? Какие клиенты?</li>
+</ul>
+
+<strong>Эти вопросы = основа сбора требований</strong>
+
+</div>
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Частые ошибки
+
+</script></section><section data-markdown><script type="text/template">
+
+### 1. Непонимание границ задачи
+
+<strong>Проблема:</strong> Не&nbsp;проясняют scope
+
+<strong>Решение:</strong> Активно задавать вопросы
+
+</script></section><section data-markdown><script type="text/template">
+
+### 2. Неправильная подготовка
+
+**Проблема:** Готовятся по&nbsp;backend-материалам
+
+**Решение:** Фокус на&nbsp;frontend-специфичные ресурсы
+
+</script></section><section data-markdown><script type="text/template">
+
+### 3. Не&nbsp;собирают требования
+
+#### Аналогия с&nbsp;едой<!-- .element: class="fragment" -->
+
+<div>Заказ &laquo;еды&raquo; может означать:<br />
+<ul>
+<li>Баланду из&nbsp;столовой</li>
+<li>Фуа-гра в&nbsp;ресторане</li>
+</ul>
+</div><!-- .element: class="fragment" -->
+
+**Требования определяют решение!**<!-- .element: class="fragment" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+### 4. Не&nbsp;показывают процесс принятия решений
+
+**Нужно:**<!-- .element: class="fragment" -->
+
+<ul>
+<li class="fragment"> Знать точки выбора</li>
+<li class="fragment"> Понимать альтернативы</li>
+<li class="fragment"> Уметь обосновать решение</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### 5. Малый кругозор
+
+**Симптомы:**
+
+<ul>
+<li class="fragment"> &laquo;Мы&nbsp;всегда деплоим в&nbsp;облако&raquo;</li>
+<li class="fragment"> &laquo;Все используют webpack&raquo;</li>
+<li class="fragment"> Не&nbsp;знают о&nbsp;существовании альтернатив</li>
+</ul>
+<div><strong>Решение:</strong> Расширение технического кругозора</div><!-- .element: class="fragment" -->
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Материалы для подготовки
+
+</script></section><section data-markdown><script type="text/template">
+
+### Проблема материалов
+
+<strong class="fragment">[Большинство материалов ориентированы на&nbsp;backend](https://www.google.com/search?q=system+design+book):</strong>
+
+<ul>
+<li class="fragment"> Очереди, балансеры, CAP теорема</li>
+<li class="fragment"> Книги
+<ul>
+<li><a href="https://bytebytego.com/" target="_blank">Alex Xu&nbsp;&laquo;System Design Interview&raquo;</a></li>
+<li><a href="https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/" target="_blank">Martin Kleppmann &laquo;Designing Data-Intensive Applications&raquo;</a></li>
+</ul>
+</li>
+<li class="fragment"> Системы целиком, а&nbsp;не&nbsp;frontend-часть </li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### Frontend System Design &ne; Backend System Design
+
+<strong class="fragment">Frontend фокус:</strong>
+
+<ul>
+<li class="fragment"> Компонентная архитектура<sup>*</sup></li>
+<li class="fragment"> Состояние приложения</li>
+<li class="fragment"> Дизайн API</li>
+<li class="fragment"> Производительность UI</li>
+</ul>
+
+</script></section><section data-markdown><script type="text/template">
+
+### Бесплатные ресурсы
+
+<ul>
+<li class="fragment"><a href="https://frontendinterviewhandbook.com/" target="_blank">Front End Interview Handbook</a></li>
+<li class="fragment"><a href="https://patterns.dev/" target="_blank">Patterns.dev</a></li>
+<li class="fragment"><a href="https://github.com/krasimir/react-in-patterns" target="_blank">React in&nbsp;Patterns</a></li>
+<li class="fragment"><a href="https://github.com/greatfrontend/awesome-front-end-system-design" target="_blank">Awesome Frontend System Design</a></li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### Платные курсы
+
+<ul>
+<li class="fragment"><a href="https://www.greatfrontend.com/front-end-system-design-playbook" target="_blank">GreatFrontEnd System Design Playbook</a></li>
+<li class="fragment"><a href="https://www.educative.io/courses/grokking-frontend-system-design-interview" target="_blank">Educative: Grokking Frontend System Design</a></li>
+<li class="fragment"><a href="https://frontendmasters.com/courses/frontend-system-design/" target="_blank">Frontend Masters: Front-End System Design</a></li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+### Книги
+
+</script></section><section data-markdown><script type="text/template">
+
+**English:**
+
+<ul>
+<li class="fragment"><a href="https://www.oreilly.com/library/view/frontend-architecture-for/9781491926772/" target="_blank">Frontend Architecture for Design Systems</a></li>
+<li class="fragment"><a href="https://refine.dev/blog/react-design-patterns/" target="_blank">React Design Patterns</a></li>
+<li class="fragment"><a href="https://www.oreilly.com/library/view/building-micro-frontends/9781492082989/" target="_blank">Building Micro-Frontends</a></li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+**Русский:**
+
+<ul>
+<li class="fragment"><a href="https://www.litres.ru/book/dzhenifer-tidvell-32/razrabotka-interfeysov-patterny-proektirovaniya-pdf-e-68332339/" target="_blank">Разработка интерфейсов. Паттерны проектирования</a></li>
+</ul>
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Практические советы
+
+</script></section><section data-markdown><script type="text/template">
+
+### Структура ответа
+
+<ol>
+<li>Сбор требований (5-10&nbsp;минут)</li>
+<li>Высокоуровневый дизайн (10-15&nbsp;минут)</li>
+<li>Детализация компонентов (15-20&nbsp;минут)</li>
+<li>Обсуждение производительности (5-10&nbsp;минут)</li>
+<li>Безопасность и&nbsp;дополнительно (5&nbsp;минут)</li>
+</ol>
+</script></section><section data-markdown><script type="text/template">
+
+### Что говорить в&nbsp;процессе
+
+</script></section><section data-markdown><script type="text/template">
+
+✅ **Хорошо:**
+
+<ul>
+<li>&laquo;Давайте уточним требования...&raquo;</li>
+<li>&laquo;Рассмотрю несколько вариантов...&raquo;</li>
+<li>&laquo;Это зависит&nbsp;от [критерий]...&raquo;</li>
+<li>&laquo;Альтернативой может быть...&raquo;</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+
+❌ **Плохо:**
+
+<ul>
+<li>&laquo;Всегда делаем так...&raquo;</li>
+<li>&laquo;Не&nbsp;знаю других способов...&raquo;</li>
+<li>Молчание во&nbsp;время размышлений</li>
+</ul>
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Для закрепления
+
+1. выберите любое приложение (даже простое)
+2. найдите 30&nbsp;точек ветвления в&nbsp;его архитектуре
+3. для каждой точки опишите 2-3 альтернативы
+4. сформулируйте вопросы для выбора решения
+5. создайте схему взаимодействия компонентов
+
+</script></section><section data-markdown><script type="text/template">
+
+## Удачи на&nbsp;собеседованиях! 🚀
+
+**Помните⚠️**
+
+System Design&nbsp;&mdash; <strike> экзамен на&nbsp;знание фактов</strike> демонстрация мыслительного процесса
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJz8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMzEwIiB3aWR0aD0iMjQwIiBoZWlnaHQ9IjMxMCI+CgkJCTxyZWN0IGlkPSJmcmFtZS1iYWNrZ3JvdW5kIiBmaWxsPSIjZmZmZmZmIiB4PSI4IiB5PSI4IiB3aWR0aD0iMjI0IiBoZWlnaHQ9IjIyNCIvPgoJCQk8IS0tIApCaXRseSBHZW5lcmF0ZWQgUVIgQ29kZQp2NAozM3gzMwotLT4KPHN2ZyAgeD0nMzAuMDAnIHk9JzMwLjAwJyB3aWR0aD0nMTgwLjAwJyBoZWlnaHQ9JzE4MC4wMCcgdmlld0JveD0nMCAwIDUyOCA1MjgnCnhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZycKeG1sbnM6eGxpbms9J2h0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsnPgoJPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KPCFbQ0RBVEFbCkBmb250LWZhY2UgeyAKCQkJZm9udC1mYW1pbHk6ICJJbnRlciI7CgkJCS8qQ29tbW9uIGNoYXJhY3RlcnMqLwoJCQlzcmM6IHVybChkYXRhOmFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbTtiYXNlNjQsZDA5R01nQUJBQUFBQUJFd0FCQUFBQUFBSjJRQUFCRFNBQU1FM1FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUdod2JsbW9jaFhnR1lEOVRWRUZVU0FCZUVRZ0twVlNkTUFFMkFpUURnWGdMZmdBRUlBV0RWZ2NnREFjYnFpR3pFUkZzSEFCUXRMMDAvMVVDRDRhb2p5NGlSQTRJcUdpZGRsRFFtL1lxc0hiNFJGN2tZbXVvYlI0WmV4aDB3Z3ZoZDV6QWxYNS9oQ1N6Qk5VYTJUTjMvSVR5d3haQlJhaXdqMFFXQmtpNDJKZVJhRnhjV0VpV1gvc0RyNXU5Ly9NSjN4RGhneDhKd3hwTGhLZ29uelZPbzRaUnluSnNSaVpqQmd3SzZHRXFZWndpUm9oeHBScllWUnFqNG9Scnd4Q2pjc29wcmR3Wk45YzZjaG8xYmRNSnVMbVRCTGI0aDd4OW5ZV0Ryb3R4aEdOTUtkeGJXdE5MeTBtdWdNS05XTmdKVithQndydU12bk1GUHlQR1NoZnMvTWRiV3lJQkxhT3dKUkpaTVZ6OC90OTFWUE0vWjlyMGJybmxoczJRcThiQ0loZzFQL2QvZnRMZjM5OFUwa0hhSFBWdTFPc3h0c09tWTdZc2tVaXgzZk16ZnNaT3lGazVMYWNxenRrcG5FYVBwS3hMNFhpdG1iWmdpdHh3bFNHSWhDN3V3YWFWeHl1Zm1RQW1BVWdvaEMvRVFxRVFDRERpQ0lhZWlFOWVEODZYaFBJU2NJWUJDZ2dRRjZYbEpZQURBUVFNQ29kaXVBSmlNUXlZdGRWNlRhUnlFRVJRK0F2STdPREgwVVFMblNBSUdEb0dKaGNFVnlSM2Mza0lRQWtSTGhvaW9zZ2dvb3NPSXJ5b29NSUxXMFNoSkdnNkNkRHdCbmFpQkJzVHFpbWFuRndBd3lqcDVnSXJ3R0VuLzEzQ2dHTkFEakxBZ0p5eHg4SDFZS05tS2hSRmlXUnhvYzBjT3VNbUJGVTlobWFNeGxlZXJuN2tFWkFGdjRuNWNmcUVNRStWV0tHak1JM0Y0eWxFeHFXYXBKNFJvTzR2WWhkem13QXJSbGEvOUthQVh0NWJySzAyU1FlNFk1cUVtZWFHVzJHQTJyRUo5TGxRdTV3K1VZcFdoUlMweE5IQmVGcXdjSXVMS1FXWHFqU09TRVJwRzdzTm5hNTB4dUNPS1VOdFd0Z0txOUp2MlRTcFFNZWNuV3dxZmNPSmlsaVhqMmdXUWdlRE55T2xpMThNWFAyWk1WUU9QVXEreUZiR3ZhUldrYUt5VHZ0d1FkRS9iWFQxSmhId2g4ZUN2d2gxQmwvV0VXVThnd3FuWmpRdTZFd2dYeSs5TnhqQ1BaWE9EbDdTZXNhMzJkbW5JRFdOMGNib1piUEtGclgxOW94Qm1GWmhlVU9iRDI4amRNZUt5Qiswa0NSWWthcWpPS0l5eHVhUnFjQ2k2ZEtwVHRnMlRvSWpPalFZOHhDa2lkNFdtdWlrWTJtRWlxVFJHV25DZDBIdXRhQzN1b0dsbyt6ZzNIQ3k1QnR0RVJwN2hVQUhvM25ScVZqb042UytaamVzc3dDc2ZpcmZvSU9ZS2xUNGNEQ2JHcnphZUJQK3Vwbi9qTEVEQjhTT3dQeW9EZ2h6WU9qOGVRTU1XT1lCMUQ2QjhUQVh3eXdMZk1vVGt3OEV5aFhvK0NJaG5EanhBZ0lDaFNMTjVnWkg0NHh0UG1mdUFETmNMT1NIZ3hQZWk4QUUzQ1Y2UWlUaThmUXVuSUFGSGdnTWJ1aGhOSlJYVG5SMkV2a1JORFJvZjN4bnN6akN6ZVVPNXdwSW1JLzIzbnl3ZGcwQ2pQend2bXBIb2FlQlhoQVd5Y0g1U2tWeE9aQVpVamlTUmE0aVB6c24wVVQ2aXY2OW8yTEVRcUI4Y2RHQlZlSDQxc3NocDBUSGVjYVl2UTBVWVFVVlNVZ1dJa2Vhb2p1R1l5cXN5VUQ5MENBRWtJd0VxS0M1MkZwSUxnYW8wTklydmF5Q3BCZEFCVVRpZ0tCRVgvd0dWY2VuVkgyTkJwaXBHMDRhSXJ4SjFTS25SYjZUTlFMWEZ5MXgxR1VIcmRVK05tcUljbVo3NWRveGFSRmFRdGhHVlVEVkhSa2QyNnBGUUFOTU5GSE9kdXBHd0lnNkdxeGdlM1U1QjBvZDlWS3hRMjRPMUc4Q0tUdDZDRFRSZm1DaE5TWjhmZ05ENERjbWZFL1pTZlU1QnlDaVhlRWJGVHVsbXRBcGRhTlBVbFo1V2tuNkROa3J0RkhPem5nMFlETXBJaTFYc0xOcURRZENHdGJUclNwMkxpQkJKMmtOMFpSSDJYazFrZU1zZFlaUGV1WkFnQVVJL1Z0cHNpTzhnSDNndlVRNnZMRVhRTkFoN2FWRXdMcGxvZUlBdXUzdGNlQVQxNzc2ekZpbEpvY0tCZzZUR0tCN2ZFNmVTbGtIUm16VlkrOUdBWXpyMlF2aU5hQ0ZBOVl3SVdqWHdPS1oyYnF2dTdsNWNzUUY0T2FsRWxPS2dNQ1F3cHdnUEVJRjhpTlFRU1FjT0VuNUFSS29nRFpGZWg2VHBFM0NFL3lpRnZBWGFLdnFBbGpqYjZtVmhBVXdEOHBYcmtFd2dVa0FqZ2tUSVZvNEJGSm11QUFjQjNnRW5BTE5EdEMvQUtBSElKRUZRUFpJcmtkVFVwU2dJeDRkdEI2TndaMkdRNFY5UTErVHQwZmNJR0xjNWxCTSt5SWNpYkJ3VGNMT0FpbERRdlZ6aUhvUUN6d0lmeXk2UVhoZ0hHVy9aL052cEFuQ0krNlhYSUxGMG5pRUUrelJGYmplRUNjMWl6WnM4U0hPN1V0NDJrZ3BnSXo2amk3M1g3R2xwMFk2ek1nUVlZUndDam93RjV0VTZ4cTdSaFgvT2s4TGpEKzhXZmZ1dC9EcWFhTmwxRm5DOCtaY1kxdXY5ZlFONFBpT1RCSkhPSHJFd3J3Um04THl2TmtRUkpYQ1VxY1RZaFJkVUphRWZIRS9HZlRIZkdKUWhNeXlMSlBPUUs4RFFqSlcwQUphVEQ4WXRnVVBQWnhSSlRFZWZNT1BEMmpSMk14QXFKSWhZMXM1OW0zTm15dTgrUjROZ29XNkJ3d0NqSHVXRVYzTWRybVVjekJpQ01MSmhxM2tQUmxRQ3RyNDgreFNWaXZpYzNvcDZTZmxjcXR1UkJDMmtSVVE1Yng2eFFPVnFDS21BMEVKMit5RUhhRVNRRlNnVXFzczlvQWVPYllQL1FRU0MxR1ZjeFR2WTZaUVRLaGVBQ2MxMTVJckZKcE9KZWdNd0I4ZzUwZUZkMnp1czhuWUFYM2tvZTh4OHpwTFRwZ1BHQ3BiNFdJU3lpN1lVcXhKMUx3S042NmtWR21KOVdQLzM4SC9aYU45SnkrWmJQZ1FuV0NEYWd1QnBFTk1VUWRFR0VWM1RMYlVRaFFoSTA3OFByVysreGx4aXFxM1FiZVd5Mzh1VktUYi9jem9sNEh4cjZoMjIvRzE4WW9QVnlrTURLWFFHWDVuVnFndHhVNGdndzJMZUZNb2dtQXpkVWRORHg4enlueXhyVVQzK2dZZitsTERkM2tqMVFleVRkbWwraUx3RHdFTVdoOGo2QlJHNUwvWENzTWdiWHRRbURaUUZWTFhaWkErcSsvZmhuQjM3cXBFbTZCQUU1dVMrZHNrWVZCMHRuS2pvS3g1QWdNTUlwNGdoR0xJWll5bW51T0dUcVNqZ0x5TUZUZEd3REE0dW4ydjVVdVdCN1QxS1NJNG1xSnduOE1MUFJqeWFNQVhvK0U3NnJUcHUyRm5QaDhRa3ZrRkZpcEVJQ1ZYZ2l0T1pqVHdFNXhaSlExMFhOZUQzdWI4c2tFS1hNc0VEd1l6SnFJZlFaNXQ5aHdHRk9nN2p2bDV2dUlIQ2ZacUxjdk1BanZnTVA2OWUwdkR6eHBseGhtTmVKTUhtZW53ejUxN25yUWYzLy9UMG9NZjNqeTBmQndmYk1qTE40d1UxTnVueG1YOW13cE9GVFVNREk1UHdvNDZoZDI5b0tqdGVNbEFSTTYxZ0FGRE1ZTmhLRGJYY2kxbklPSjRTVkc3ZTc3ZFc5djZ5OE0rWXNzSitwR1pWdy80ZkFBNDZTY2M0RDZVMXA5QlZnazRxQmYzMko2Wmx2TmVqRi80K2ZKRDJWOHBJeDM1djluYmNsWWFyVTNwSFdMU2JPN1htclZYTE9aNFB4N3paSCtsdVZJTnVRNEt0cVJBMTFKMk5hYjAwcUtCczhVTXhybml3SUZ2REV5TmhoejgzQ1hQekRULytYMUY1YmlOT0Q0ei9ZRC9jYS95bld2Q29ldnRMSUhaMEdyelZsdE1zYXY0S3E2ZG1xK0crUXJnTSswQWVJMXdLdzVYUmcrNk9odzQzK3RRZmZqRmw3Wk5HeFZIRW9TRmg3ZWs2dmM4L1ZMc3JLaGFPejlzUkJzMktna0lxTDB5TS84b1BRNDRjcTZZd2FVUnVFdnFPMWxLdUV1V2wwQW5TUzRNVHprU3RKZFE0ZE5ualJ0TGRKUkV1OERIMDVQVGttR1hFdUF5UTRlNzBlOVd3MnlHSEhmSSsrK0EvdmZCZmEwTEwxNXM4US9TdjdPYVgzYmRLTnM2dkd2WDFxR2JKVDM5NE1pQjVhaUNlTEVrSm0zZENQRmtTY1RuL2lPSmdkcFpROXBidmZmZDZoRjA4aTMxbE50cHl0NXFtRHBzdTN4VDB2MjVCWXdjblY5N2xEMmZkaFEyMUlQcmtabWVhNDIzTnNtT2lkYW15bmNsTjFETmR5UFN5TkhQK21zcXJxdTYrNXlTdnJTWWVRY3UvZW5VQTdPMk4ycnVKVlkzUDh1bzdaYmxsTzI1bWxZNDcvZUVkM3lQbWJ0OTF5QzJlWFFzcEtuL0kzWWM4QWFPV1FCZ1ZvSWpwM2VEK0xvVlNiNDNtaWdkZlA5ZWdTSDNUdURwK1VWcWFsL2FsR2ZPL0tUYysxSURwQW44NklNc01iOGtqZ05GdmpqODRUV21KTDNqbFN3UXNpQi91SDd3aVJjUTdBazhjRmhBVzAvNE9GdytCQXZuUVBnblJqNW5FV1J4d0JyQng3ZDJrS1dYNExPTTM1OXNUNGIrL2ppNkxNTzhtUWVYLzJEaGhHL0wvMHYyMzlNb2N6dS96cnkzckdEMmZsZTlXL3JTS0Z5dDYrajQ2dHRXdjNWUDBtTDJtN1J2bDh1VGpKLzJGKzc4ejJXYlpZSlpWbHAyTlUxNHY4bFlMUHBhTVBWTTRyT1hySFpldjgzcFpLZ2diK3V1Uzd2QkRqaFliT1NSak4xNmtXYllmNmhML01IV0pWazRiRlNmRTJYWEhQT3gwR2IwVW54RTNhd2UwMG9ZbmUwaWJPeW9SaldpRXFNUXFtQlBSZHp1a2Y3d3VpOG4vTlpFTzIxbjE0TTVCeTFlZVZmYXRmdnVOSmVqK3ZNeXh6dUhtaklPcjhqZDZiN09NcWRCT3dVMUVHUmtHeGNPZDBsc0g3ckUva1BER3Iwb1kvY1IwbVlCSEtZdFBzZXlhODZKdHQ5dkhsRkxjWDJmR0IxUnFUUmpSMFZZZTZlRU1hYUZNQ1A3TVcrMFQyU3g5T1dGMzVxb2ZKWDI3Zm15aFE4a3VuSEQzcHpiZ3hXS0ErUDdpaC90YWRSWFdoL3NQcGlwQ1MwdW1KZjJZb1h2OXEvMHZ3b2dNaDVNc1NhWGVnRDZwSExYMmV1YlNqWVZlNTlaZmR2OVdVaEZUa1U1MExVUXVrcHc1cWVON1UyQmFRTzF2d3FMVHFmdnYvYitnakdTUEpaVmJjalNYUE03ZXpyTmF1bks4amNPYXd5aXJOMUhXTFpwb0FlTW5iY0h5Sm0wNU9hUkw2UWZUM2VML3h3NXFOS01IUkhOYUhVUzI5Zys4Rm10MVZvQUI0dVZETnN4MVhUeHl6ZTc5OExZaE1WNGVkRFVJNzhrekJ1QUthQ0RCZWpnbUFCeG9zeFZxeURIY1Y2WVhhODZCMW16NE81d21ackpZcHFaSkxOSVhGUFIzVXZaeVM4RTBueXBVMmM0dCsrVG40d0VBQTRiZTdoTnYvUjBMQjNSZ2s4aVBJbzhQdlpwS3hsWS9WMmo1dWl0eHNocUluckhtNmF1T3c3Z2dsbXcwMWNQMWJTZkd6NzgwdXBUKzVXdVB1T2tVTkJYWmx3SlQ0ZnAvY2dmTnV1MXIycStnTkdwNU1XQlc1MWxCcUYwb0M2S1RrUmUxNHZmV3ZWU1k1MFEya210Yi9YaVk5MjlmL0oybTlEeCtISGhyTnNkSjA4cUlLVEYwZDFWOEdBRjRMeHBtMDhkYmhRWkFIRzhtMEFheWdzZ2NhT2pyaXlqajIxNnBYaW5QbFlVZ3VIVGVVa3NLbnQ0WUo5WENoSmtQYitlR1NqVFowamE4OFpoamJMM2ZreG9zcVIyWmU2QmF3cng1ajNTaGdVdkl2NFZkSE84VGFtNU8zdm5oVGNodDdralR5TG03enEvNjFEWGNKUDRuM0cvTUsrWm1IdEJvL2RPN1cyNThWZForelIyQXlMaXdlUmorckhVQWc1WEpOR2lESGFvUCt0NTRQM0tEVzZySk45czJIMjJIcEpRZWRQR0dpMFkwZm1MZHIzcVNjMmU0L2NPM21qZGZHbkw3cXVRUVFmZmVyQnFlL0JTbW9oemdOQjU4V0FuUjQ4U3BQTG9IeVJmVFJRdXRkMzF2M1RIdEN4bUFWWTlsRzVQUnVMZGpKRW9YV2NrZnB3QnZLb1ZzWmx1ckppN0c5eHJuWEx5RnN1WDdQU3R4OTNlQis3WTB5VTd2dENlL2h6NitzT1ZBaUxadkhzd0ROdE1GSmxoQVE1SW5QR2xkSXMzRWtuNStVbjdENkxXcEZNUWJSSXMra3c5cFZtQlgyczJLOHpYV3NxU25mRktCS1BaQ0xVdVJzZkFsY0NiNU5HVjR5R0pDUlJGTllSS01IY2Zrc0FIOS9yZTNrbmV1QUgzM2RnaEtkS08zTlJQVGhxS0tuZUp4UXBGQldHdkw0Q3FmdFErZWU2WTdSTDdmNzBuQVBEMXo0QTM0T2ZqSFNlWU4zU00wR0VRYUtFQUFYNjBXMzYxT2R4MUlhQ3pIRytkRjN0bGtOaHgyUmRndlMvWm8xWWlkNWdBYmpua3VObXVuYndMYURDVTY1bWFKRkhUQk5DYlB6aXUrQ0dLZ2E2RXh1VTY5WTB5aUhXeUozZnBrTmcrSFM0WlNwVko5bkI2cUV5ZWEreE4wbDlrVlpoS3JWNG1GM1B6Und2QURhcllWa1pVQTB5L29NbVp0Wi9HU0cyQTg2MEVrOWtFdlZXWXhsb3BuTEN4NlJ2Q1pHWEJhd2ltbGt2WkxWVTRUTVJUbGJVTWxNTUNBamd1QWczUTRPeDBveG8wU0QwTHdDdWdOeUVZVkNhVXMrTW1Ha3F2Q2VObHl1UWczSWRPZEY3QjdRcHhBV2FzTWhFWWtVbzluRjdzYXFWa3FwVExseXVQSEZzdzZ1aGhXKzhacFB2L1RBazVxWEpzNlhQdVVnV2t4UHFlbFNwbWt1ZDZ5bTEzakZ4NVVJanM0WWtXdUh0ejVldWNSQVdSWmNSS0ZRdnNTZkVNNk1oM1ArT2lVUDYxcEhJZm5pTENSRUxlL1hsS2tDZ3gxbG9ueFRveCt1R1dqbGcxS0d5NnNkMytkdmxLbFdDN0ZsUDlsUzVGRVFvVGhCSk9paUlLbGJpSkZEeTZUaXJvT21oL3lpL0lpT1Y4cTVtNk56NEFBQUE9KTsKCQkgIH0KXV0+Cjwvc3R5bGU+CjxnIGlkPSdiYWNrZ3JvdW5kJyBzdHlsZT0nZmlsbDojZmZmZmZmJyA+CjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI1MjgiIGhlaWdodD0iNTI4IiAvPgo8L2c+CjxnIGlkPSdwaXBzJyBzdHlsZT0nZmlsbDojMDAwMDAwJyA+CjxwYXRoIGQ9Ik0wLDE2MEwxNiwxNjBMMzIsMTYwTDQ4LDE2MEw0OCwxNzZMMzIsMTc2TDMyLDE5Mkw0OCwxOTJMNDgsMjA4TDMyLDIwOEwxNiwyMDhMMCwyMDhMMCwxOTJMMCwxNzZMMCwxNjBNMCwyMjRMMTYsMjI0TDE2LDI0MEwwLDI0MEwwLDIyNE0wLDI3MkwxNiwyNzJMMTYsMjg4TDAsMjg4TDAsMjcyTTAsMzA0TDE2LDMwNEwxNiwyODhMMzIsMjg4TDQ4LDI4OEw0OCwzMDRMNDgsMzIwTDMyLDMyMEwzMiwzMzZMMTYsMzM2TDE2LDM1MkwxNiwzNjhMMTYsMzg0TDMyLDM4NEwzMiw0MDBMMTYsNDAwTDAsNDAwTDAsMzg0TDAsMzY4TDAsMzUyTDAsMzM2TDAsMzIwTDAsMzA0TTE2LDI0MEwzMiwyNDBMMzIsMjU2TDMyLDI3MkwxNiwyNzJMMTYsMjU2TDE2LDI0ME0zMiwyMjRMNDgsMjI0TDQ4LDI0MEwzMiwyNDBMMzIsMjI0TTMyLDMzNkw0OCwzMzZMNjQsMzM2TDY0LDM1Mkw0OCwzNTJMMzIsMzUyTDMyLDMzNk00OCwxMjhMNjQsMTI4TDgwLDEyOEw4MCwxNDRMOTYsMTQ0TDk2LDE2MEw4MCwxNjBMODAsMTc2TDY0LDE3Nkw2NCwxNjBMNDgsMTYwTDQ4LDE0NEw0OCwxMjhNNDgsMTc2TDY0LDE3Nkw2NCwxOTJMNDgsMTkyTDQ4LDE3Nk00OCwyNzJMNjQsMjcyTDY0LDI1Nkw2NCwyNDBMODAsMjQwTDgwLDIyNEw5NiwyMjRMMTEyLDIyNEwxMTIsMjQwTDk2LDI0MEw5NiwyNTZMMTEyLDI1NkwxMTIsMjcyTDk2LDI3Mkw4MCwyNzJMODAsMjg4TDY0LDI4OEw0OCwyODhMNDgsMjcyTTQ4LDM4NEw2NCwzODRMNjQsMzY4TDgwLDM2OEw4MCwzNTJMODAsMzM2TDk2LDMzNkw5NiwzNTJMMTEyLDM1MkwxMTIsMzY4TDk2LDM2OEw5NiwzODRMMTEyLDM4NEwxMjgsMzg0TDE0NCwzODRMMTQ0LDQwMEwxNDQsNDE2TDE2MCw0MTZMMTYwLDQwMEwxNzYsNDAwTDE3NiwzODRMMTkyLDM4NEwxOTIsMzY4TDIwOCwzNjhMMjA4LDM4NEwyMjQsMzg0TDI0MCwzODRMMjQwLDQwMEwyMjQsNDAwTDIyNCw0MTZMMjI0LDQzMkwyMjQsNDQ4TDI0MCw0NDhMMjQwLDQ2NEwyNTYsNDY0TDI3Miw0NjRMMjcyLDQ0OEwyODgsNDQ4TDI4OCw0MzJMMzA0LDQzMkwzMjAsNDMyTDMyMCw0NDhMMzIwLDQ2NEwzMzYsNDY0TDMzNiw0NDhMMzUyLDQ0OEwzNTIsNDY0TDM1Miw0ODBMMzM2LDQ4MEwzMzYsNDk2TDMyMCw0OTZMMzIwLDQ4MEwzMDQsNDgwTDMwNCw0NjRMMjg4LDQ2NEwyODgsNDgwTDI4OCw0OTZMMjcyLDQ5NkwyNzIsNDgwTDI1Niw0ODBMMjU2LDQ5NkwyNDAsNDk2TDIyNCw0OTZMMjA4LDQ5NkwyMDgsNTEyTDIwOCw1MjhMMTkyLDUyOEwxOTIsNTEyTDE5Miw0OTZMMTkyLDQ4MEwxNzYsNDgwTDE3Niw0NjRMMTYwLDQ2NEwxNjAsNDQ4TDE0NCw0NDhMMTQ0LDQzMkwxMjgsNDMyTDEyOCw0MTZMMTI4LDQwMEwxMTIsNDAwTDk2LDQwMEw4MCw0MDBMNjQsNDAwTDQ4LDQwMEw0OCwzODRNODAsMTkyTDk2LDE5MkwxMTIsMTkyTDExMiwxNzZMOTYsMTc2TDk2LDE2MEwxMTIsMTYwTDEyOCwxNjBMMTI4LDE0NEwxNDQsMTQ0TDE0NCwxNjBMMTYwLDE2MEwxNjAsMTc2TDE2MCwxOTJMMTc2LDE5MkwxNzYsMTc2TDE3NiwxNjBMMTkyLDE2MEwxOTIsMTc2TDIwOCwxNzZMMjA4LDE2MEwyMjQsMTYwTDIyNCwxNzZMMjI0LDE5MkwyMDgsMTkyTDE5MiwxOTJMMTkyLDIwOEwxOTIsMjI0TDIwOCwyMjRMMjI0LDIyNEwyMjQsMjQwTDIwOCwyNDBMMTkyLDI0MEwxOTIsMjU2TDE3NiwyNTZMMTc2LDI0MEwxNzYsMjI0TDE3NiwyMDhMMTYwLDIwOEwxNjAsMjI0TDE2MCwyNDBMMTYwLDI1NkwxNjAsMjcyTDE3NiwyNzJMMTc2LDI4OEwxOTIsMjg4TDE5MiwzMDRMMjA4LDMwNEwyMDgsMzIwTDE5MiwzMjBMMTkyLDMzNkwxNzYsMzM2TDE3NiwzMjBMMTYwLDMyMEwxNjAsMzA0TDE2MCwyODhMMTQ0LDI4OEwxNDQsMjcyTDEyOCwyNzJMMTI4LDI1NkwxNDQsMjU2TDE0NCwyNDBMMTQ0LDIyNEwxMjgsMjI0TDExMiwyMjRMMTEyLDIwOEw5NiwyMDhMODAsMjA4TDgwLDE5Mk05NiwxMjhMMTEyLDEyOEwxMjgsMTI4TDEyOCwxNDRMMTEyLDE0NEw5NiwxNDRMOTYsMTI4TTk2LDI4OEwxMTIsMjg4TDExMiwzMDRMOTYsMzA0TDk2LDI4OE05NiwzMjBMMTEyLDMyMEwxMjgsMzIwTDEyOCwzMDRMMTQ0LDMwNEwxNDQsMzIwTDE0NCwzMzZMMTYwLDMzNkwxNzYsMzM2TDE3NiwzNTJMMTkyLDM1MkwxOTIsMzY4TDE3NiwzNjhMMTc2LDM4NEwxNjAsMzg0TDE0NCwzODRMMTQ0LDM2OEwxNjAsMzY4TDE2MCwzNTJMMTQ0LDM1MkwxMjgsMzUyTDEyOCwzMzZMMTEyLDMzNkw5NiwzMzZMOTYsMzIwTTEyOCwxNzZMMTI4LDE5MkwxNDQsMTkyTDE0NCwxNzZMMTI4LDE3Nk0xMjgsMzJMMTQ0LDMyTDE0NCw0OEwxNDQsNjRMMTI4LDY0TDEyOCw0OEwxMjgsMzJNMTI4LDk2TDE0NCw5NkwxNDQsMTEyTDEyOCwxMTJMMTI4LDk2TTEyOCw0NDhMMTQ0LDQ0OEwxNDQsNDY0TDE0NCw0ODBMMTI4LDQ4MEwxMjgsNDY0TDEyOCw0NDhNMTQ0LDE2TDE2MCwxNkwxNjAsMzJMMTQ0LDMyTDE0NCwxNk0xNDQsMTI4TDE2MCwxMjhMMTYwLDExMkwxNjAsOTZMMTc2LDk2TDE3NiwxMTJMMTkyLDExMkwxOTIsMTI4TDE3NiwxMjhMMTc2LDE0NEwxNzYsMTYwTDE2MCwxNjBMMTYwLDE0NEwxNDQsMTQ0TDE0NCwxMjhNMTQ0LDQ4MEwxNjAsNDgwTDE2MCw0OTZMMTc2LDQ5NkwxNzYsNTEyTDE2MCw1MTJMMTYwLDUyOEwxNDQsNTI4TDE0NCw1MTJMMTQ0LDQ5NkwxNDQsNDgwTTE2MCwzMkwxNzYsMzJMMTc2LDE2TDE3NiwwTDE5MiwwTDIwOCwwTDIyNCwwTDI0MCwwTDI0MCwxNkwyMjQsMTZMMjI0LDMyTDIyNCw0OEwyMjQsNjRMMjQwLDY0TDI0MCw0OEwyNDAsMzJMMjU2LDMyTDI3MiwzMkwyNzIsNDhMMjg4LDQ4TDI4OCw2NEwyODgsODBMMjg4LDk2TDI3Miw5NkwyNzIsODBMMjcyLDY0TDI1Niw2NEwyNTYsODBMMjQwLDgwTDIyNCw4MEwyMjQsOTZMMjA4LDk2TDIwOCwxMTJMMTkyLDExMkwxOTIsOTZMMTc2LDk2TDE3Niw4MEwxNjAsODBMMTYwLDY0TDE2MCw0OEwxNjAsMzJNMTc2LDQ4TDE3Niw2NEwxOTIsNjRMMjA4LDY0TDIwOCw0OEwyMDgsMzJMMTkyLDMyTDE5Miw0OEwxNzYsNDhNMTc2LDQxNkwxNzYsNDMyTDE5Miw0MzJMMTkyLDQ0OEwyMDgsNDQ4TDIwOCw0MzJMMjA4LDQxNkwyMDgsNDAwTDE5Miw0MDBMMTkyLDQxNkwxNzYsNDE2TTE5MiwxMjhMMjA4LDEyOEwyMjQsMTI4TDIyNCwxMTJMMjI0LDk2TDI0MCw5NkwyNDAsMTEyTDI1NiwxMTJMMjU2LDEyOEwyNzIsMTI4TDI4OCwxMjhMMzA0LDEyOEwzMDQsMTQ0TDMyMCwxNDRMMzM2LDE0NEwzNTIsMTQ0TDM1MiwxNjBMMzM2LDE2MEwzMzYsMTc2TDMyMCwxNzZMMzIwLDE2MEwzMDQsMTYwTDI4OCwxNjBMMjg4LDE0NEwyNzIsMTQ0TDI3MiwxNjBMMjcyLDE3NkwyNTYsMTc2TDI0MCwxNzZMMjQwLDE2MEwyNDAsMTQ0TDIyNCwxNDRMMjA4LDE0NEwxOTIsMTQ0TDE5MiwxMjhNMTkyLDI3MkwyMDgsMjcyTDIwOCwyODhMMTkyLDI4OEwxOTIsMjcyTTE5MiwzMzZMMjA4LDMzNkwyMDgsMzUyTDE5MiwzNTJMMTkyLDMzNk0yMDgsMjg4TDIyNCwyODhMMjQwLDI4OEwyNDAsMzA0TDIyNCwzMDRMMjA4LDMwNEwyMDgsMjg4TTIwOCwzMjBMMjI0LDMyMEwyMjQsMzM2TDIwOCwzMzZMMjA4LDMyME0yMjQsMjQwTDI0MCwyNDBMMjQwLDI1NkwyMjQsMjU2TDIyNCwyNDBNMjI0LDUxMkwyNDAsNTEyTDI1Niw1MTJMMjU2LDQ5NkwyNzIsNDk2TDI3Miw1MTJMMjcyLDUyOEwyNTYsNTI4TDI0MCw1MjhMMjI0LDUyOEwyMjQsNTEyTTI0MCwyMDhMMjU2LDIwOEwyNTYsMTkyTDI3MiwxOTJMMjg4LDE5MkwyODgsMjA4TDI3MiwyMDhMMjcyLDIyNEwyNzIsMjQwTDI1NiwyNDBMMjU2LDIyNEwyNDAsMjI0TDI0MCwyMDhNMjQwLDI3MkwyNTYsMjcyTDI3MiwyNzJMMjg4LDI3MkwyODgsMjg4TDI4OCwzMDRMMjcyLDMwNEwyNTYsMzA0TDI1NiwyODhMMjQwLDI4OEwyNDAsMjcyTTI0MCwzMDRMMjU2LDMwNEwyNTYsMzIwTDI0MCwzMjBMMjQwLDMwNE0yNDAsNDE2TDI1Niw0MTZMMjcyLDQxNkwyODgsNDE2TDI4OCw0MzJMMjcyLDQzMkwyNzIsNDQ4TDI1Niw0NDhMMjU2LDQzMkwyNDAsNDMyTDI0MCw0MTZNMjU2LDBMMjcyLDBMMjg4LDBMMzA0LDBMMzIwLDBMMzM2LDBMMzM2LDE2TDM1MiwxNkwzNTIsMEwzNjgsMEwzNjgsMTZMMzY4LDMyTDM1MiwzMkwzNTIsNDhMMzUyLDY0TDMzNiw2NEwzMzYsODBMMzIwLDgwTDMyMCw2NEwzMDQsNjRMMzA0LDQ4TDI4OCw0OEwyODgsMzJMMzA0LDMyTDMyMCwzMkwzMjAsMTZMMzA0LDE2TDI4OCwxNkwyODgsMzJMMjcyLDMyTDI3MiwxNkwyNTYsMTZMMjU2LDBNMjU2LDk2TDI3Miw5NkwyNzIsMTEyTDI1NiwxMTJMMjU2LDk2TTI1NiwzMjBMMjcyLDMyMEwyNzIsMzM2TDI4OCwzMzZMMzA0LDMzNkwzMjAsMzM2TDMyMCwzMjBMMzA0LDMyMEwyODgsMzIwTDI4OCwzMDRMMzA0LDMwNEwzMjAsMzA0TDMzNiwzMDRMMzM2LDMyMEwzMzYsMzM2TDMzNiwzNTJMMzM2LDM2OEwzMjAsMzY4TDMyMCwzNTJMMzA0LDM1MkwzMDQsMzY4TDI4OCwzNjhMMjg4LDM1MkwyNzIsMzUyTDI1NiwzNTJMMjU2LDMzNkwyNTYsMzIwTTI4OCw5NkwzMDQsOTZMMzA0LDExMkwyODgsMTEyTDI4OCw5Nk0yODgsMTc2TDMwNCwxNzZMMzA0LDE5MkwyODgsMTkyTDI4OCwxNzZNMjg4LDIwOEwzMDQsMjA4TDMwNCwyMjRMMjg4LDIyNEwyODgsMjA4TTI4OCwzODRMMzA0LDM4NEwzMDQsNDAwTDI4OCw0MDBMMjg4LDM4NE0yODgsNDk2TDMwNCw0OTZMMzA0LDUxMkwzMjAsNTEyTDMyMCw1MjhMMzA0LDUyOEwyODgsNTI4TDI4OCw1MTJMMjg4LDQ5Nk0zMDQsODBMMzIwLDgwTDMyMCw5NkwzMDQsOTZMMzA0LDgwTTMwNCwxMTJMMzIwLDExMkwzMjAsMTI4TDMwNCwxMjhMMzA0LDExMk0zMDQsMjI0TDMyMCwyMjRMMzM2LDIyNEwzMzYsMjQwTDMyMCwyNDBMMzIwLDI1NkwzMDQsMjU2TDMwNCwyNDBMMzA0LDIyNE0zMDQsMjcyTDMyMCwyNzJMMzIwLDI1NkwzMzYsMjU2TDMzNiwyNzJMMzM2LDI4OEwzMjAsMjg4TDMwNCwyODhMMzA0LDI3Mk0zMDQsMzY4TDMyMCwzNjhMMzIwLDM4NEwzMDQsMzg0TDMwNCwzNjhNMzIwLDk2TDMzNiw5NkwzMzYsMTEyTDMyMCwxMTJMMzIwLDk2TTMyMCwxOTJMMzM2LDE5MkwzMzYsMTc2TDM1MiwxNzZMMzUyLDE2MEwzNjgsMTYwTDM2OCwxNDRMMzg0LDE0NEw0MDAsMTQ0TDQxNiwxNDRMNDE2LDE2MEw0MTYsMTc2TDQwMCwxNzZMNDAwLDE2MEwzODQsMTYwTDM4NCwxNzZMMzY4LDE3NkwzNjgsMTkyTDM1MiwxOTJMMzUyLDIwOEwzNTIsMjI0TDMzNiwyMjRMMzM2LDIwOEwzMjAsMjA4TDMyMCwxOTJNMzIwLDM4NEwzMzYsMzg0TDMzNiw0MDBMMzIwLDQwMEwzMjAsMzg0TTMyMCw0MTZMMzM2LDQxNkwzNTIsNDE2TDM1Miw0MDBMMzUyLDM4NEwzNTIsMzY4TDM2OCwzNjhMMzY4LDM4NEwzNjgsNDAwTDM4NCw0MDBMMzg0LDM4NEw0MDAsMzg0TDQxNiwzODRMNDMyLDM4NEw0MzIsMzY4TDQxNiwzNjhMNDE2LDM1Mkw0MDAsMzUyTDQwMCwzMzZMMzg0LDMzNkwzODQsMzIwTDM2OCwzMjBMMzY4LDMwNEwzNjgsMjg4TDM4NCwyODhMMzg0LDMwNEw0MDAsMzA0TDQwMCwzMjBMNDE2LDMyMEw0MTYsMzM2TDQzMiwzMzZMNDMyLDM1Mkw0NDgsMzUyTDQ0OCwzNjhMNDY0LDM2OEw0NjQsMzg0TDQ2NCw0MDBMNDY0LDQxNkw0ODAsNDE2TDQ5Niw0MTZMNDk2LDQzMkw1MTIsNDMyTDUxMiw0NDhMNTEyLDQ2NEw1MTIsNDgwTDQ5Niw0ODBMNDgwLDQ4MEw0NjQsNDgwTDQ2NCw0NjRMNDgwLDQ2NEw0OTYsNDY0TDQ5Niw0NDhMNDgwLDQ0OEw0NjQsNDQ4TDQ2NCw0NjRMNDQ4LDQ2NEw0NDgsNDgwTDQzMiw0ODBMNDMyLDQ2NEw0MTYsNDY0TDQxNiw0ODBMNDAwLDQ4MEwzODQsNDgwTDM4NCw0NjRMMzY4LDQ2NEwzNjgsNDQ4TDM2OCw0MzJMMzUyLDQzMkwzMzYsNDMyTDMyMCw0MzJMMzIwLDQxNk0zMzYsODBMMzUyLDgwTDM1Miw5NkwzMzYsOTZMMzM2LDgwTTM1Miw5NkwzNjgsOTZMMzY4LDExMkwzNjgsMTI4TDM1MiwxMjhMMzUyLDExMkwzNTIsOTZNMzUyLDI3MkwzNjgsMjcyTDM2OCwyODhMMzUyLDI4OEwzNTIsMjcyTTM1MiwzMzZMMzY4LDMzNkwzNjgsMzUyTDM1MiwzNTJMMzUyLDMzNk0zNTIsNDgwTDM2OCw0ODBMMzg0LDQ4MEwzODQsNDk2TDM4NCw1MTJMNDAwLDUxMkw0MTYsNTEyTDQxNiw1MjhMNDAwLDUyOEwzODQsNTI4TDM2OCw1MjhMMzY4LDUxMkwzNTIsNTEyTDM1Miw0OTZMMzUyLDQ4ME0zNjgsMzJMMzg0LDMyTDM4NCwxNkwzODQsMEw0MDAsMEw0MDAsMTZMNDAwLDMyTDQwMCw0OEwzODQsNDhMMzg0LDY0TDQwMCw2NEw0MDAsODBMMzg0LDgwTDM4NCw5NkwzNjgsOTZMMzY4LDgwTDM2OCw2NEwzNjgsNDhMMzY4LDMyTTM2OCwxOTJMMzg0LDE5MkwzODQsMTc2TDQwMCwxNzZMNDAwLDE5Mkw0MDAsMjA4TDQxNiwyMDhMNDE2LDIyNEw0MDAsMjI0TDM4NCwyMjRMMzY4LDIyNEwzNjgsMjA4TDM2OCwxOTJNMzg0LDk2TDQwMCw5Nkw0MDAsMTEyTDQwMCwxMjhMMzg0LDEyOEwzODQsMTEyTDM4NCw5Nk0zODQsMjQwTDQwMCwyNDBMNDAwLDI1NkwzODQsMjU2TDM4NCwyNDBNMzg0LDI3Mkw0MDAsMjcyTDQwMCwyODhMMzg0LDI4OEwzODQsMjcyTTM4NCwzNTJMNDAwLDM1Mkw0MDAsMzY4TDM4NCwzNjhMMzg0LDM1Mk00MDAsNDAwTDQwMCw0MTZMNDAwLDQzMkw0MDAsNDQ4TDQxNiw0NDhMNDMyLDQ0OEw0NDgsNDQ4TDQ0OCw0MzJMNDQ4LDQxNkw0NDgsNDAwTDQzMiw0MDBMNDE2LDQwMEw0MDAsNDAwTTQwMCwyNTZMNDE2LDI1Nkw0MTYsMjQwTDQzMiwyNDBMNDMyLDIyNEw0MzIsMjA4TDQxNiwyMDhMNDE2LDE5Mkw0MTYsMTc2TDQzMiwxNzZMNDMyLDE2MEw0MzIsMTQ0TDQ0OCwxNDRMNDY0LDE0NEw0NjQsMTYwTDQ0OCwxNjBMNDQ4LDE3Nkw0NjQsMTc2TDQ2NCwxOTJMNDY0LDIwOEw0NjQsMjI0TDQ0OCwyMjRMNDQ4LDI0MEw0NDgsMjU2TDQ2NCwyNTZMNDY0LDI3Mkw0ODAsMjcyTDQ4MCwyODhMNDk2LDI4OEw0OTYsMzA0TDQ5NiwzMjBMNDgwLDMyMEw0ODAsMzM2TDQ2NCwzMzZMNDY0LDMyMEw0NjQsMzA0TDQ2NCwyODhMNDQ4LDI4OEw0MzIsMjg4TDQzMiwzMDRMNDMyLDMyMEw0MTYsMzIwTDQxNiwzMDRMNDAwLDMwNEw0MDAsMjg4TDQxNiwyODhMNDE2LDI3Mkw0MDAsMjcyTDQwMCwyNTZNNDE2LDQxNkw0MzIsNDE2TDQzMiw0MzJMNDE2LDQzMkw0MTYsNDE2TTQzMiwzMjBMNDQ4LDMyMEw0NDgsMzM2TDQzMiwzMzZMNDMyLDMyME00NDgsMzM2TDQ2NCwzMzZMNDY0LDM1Mkw0NDgsMzUyTDQ0OCwzMzZNNDY0LDEyOEw0ODAsMTI4TDQ5NiwxMjhMNDk2LDE0NEw0OTYsMTYwTDQ4MCwxNjBMNDgwLDE0NEw0NjQsMTQ0TDQ2NCwxMjhNNDY0LDIyNEw0ODAsMjI0TDQ4MCwyMDhMNDk2LDIwOEw0OTYsMTkyTDUxMiwxOTJMNTEyLDE3Nkw0OTYsMTc2TDQ5NiwxNjBMNTEyLDE2MEw1MjgsMTYwTDUyOCwxNzZMNTI4LDE5Mkw1MjgsMjA4TDUxMiwyMDhMNTEyLDIyNEw0OTYsMjI0TDQ5NiwyNDBMNDk2LDI1Nkw0ODAsMjU2TDQ2NCwyNTZMNDY0LDI0MEw0NjQsMjI0TTQ4MCwxNzZMNDk2LDE3Nkw0OTYsMTkyTDQ4MCwxOTJMNDgwLDE3Nk00ODAsMzUyTDQ5NiwzNTJMNDk2LDMzNkw1MTIsMzM2TDUxMiwzNTJMNTI4LDM1Mkw1MjgsMzY4TDUxMiwzNjhMNTEyLDM4NEw0OTYsMzg0TDQ4MCwzODRMNDgwLDM2OEw0ODAsMzUyTTQ5NiwyNTZMNTEyLDI1Nkw1MTIsMjcyTDUyOCwyNzJMNTI4LDI4OEw1MjgsMzA0TDUyOCwzMjBMNTI4LDMzNkw1MTIsMzM2TDUxMiwzMjBMNTEyLDMwNEw1MTIsMjg4TDQ5NiwyODhMNDk2LDI3Mkw0OTYsMjU2TTQ5Niw0MDBMNTEyLDQwMEw1MTIsNDE2TDQ5Niw0MTZMNDk2LDQwME01MTIsMjQwTDUyOCwyNDBMNTI4LDI1Nkw1MTIsMjU2TDUxMiwyNDBNNTEyLDM4NEw1MjgsMzg0TDUyOCw0MDBMNTEyLDQwMEw1MTIsMzg0WiIgLz4KPHBhdGggZD0iTTQuNzI1Myw5LjA2ODlDNi4xNzksOS4wNDM2IDYuNDE0OSw3LjYxNTQgNi40MTQ5LDYuNzY5QzYuNDE0OSw1LjUxNjMgNS43NzUsNS4wNzg4IDUsNUM0LjA0MjUsNS40MjQyIDMuMzQwMyw2LjE0NiAzLjI1NTUsNy4yNjA2QzMuMjQxNiw3LjQ0NDMgMy4yMzcsNy42ODk0IDMuMjUxNiw3Ljk3NTdDMy4yOTA2LDguNzM4MyAzLjg0OTMsOS4wODQzIDQuNzI1Myw5LjA2ODkgTSAxMi4yNDQ3IDEwLjgwNjggQyAxMS4yMDQ3IDEwLjgwNjggMTAuMTExOCAxMC4xNjczIDEwLjA2IDguOTcwNyBDIDguODc3NCAxMC4yMjIzIDcuMDUzOCAxMC44MTg2IDQuNzI1MyAxMC44MTg2IEMgMi4zNzY5IDEwLjgxODYgMS4zOTYgOS4yMTc1IDEuMzk2IDcuOTcwMyBDIDEuNDU1NCAzLjgxMjYgMS4zNjA1IDIuMjU1IDEuMzQxIDEuOTM1MyBDIDEuMzM5MyAxLjkwNyAxLjMzODEgMS44ODg0IDEuMzM3NyAxLjg3ODUgTCAxLjMzNzMgMS44Njc3IEMgMS4zMzEzIDEuNzA5NiAxLjMyMjQgMS40NzMzIDEuMTcyIDEuNDU3MiBDIDEuMDc4NiAxLjQ0NzIgMS4wMTgzIDEuNDc1NyAwLjkxMSAxLjYwOTQgQyAwLjc1IDEuODIzMyAwLjQyNSAxLjkwOCAwLjIyNzMgMS43OTM3IEMgLTAuMDExNiAxLjY1NTUgLTAuMDU2MiAxLjM1MDUgMC4wNjQ3IDEuMDY5NyBDIDAuNDAwMiAwLjMyMTIgMC45Mzc5IC0wLjAxIDEuNjYyNSAwLjAwMDMgQyAyLjkxNDYgMC4wMTgyIDMuMjczOCAwLjgzNTkgMy4yNzM4IDEuODU3NSBDIDMuMjczOCAxLjg1NzUgMy4yNDYgMy4zMjkyIDMuMjQ2IDQuMTU3OSBDIDMuNjg5IDMuNzk2OSA0LjMzOTcgMy40MDk4IDUuNDI2NiAzLjQwOTggQyA3LjY4OTkgMy40MDk4IDkuMTI2NyA2LjIxMTggNy42NTAzIDguODkyNSBDIDkuNTQyOCA4LjAxOTcgOS45Mzc4IDYuNTE2NCAxMC4wMTEyIDUuMDIzOCBMIDEwLjAwNDMgNC41MjAzIEMgMTAuMDA0MyAzLjk1NTIgMTAuMzY4OCAzLjQ3NjcgMTAuOTM2MSAzLjQ3NjcgQyAxMS41MDM0IDMuNDc2NyAxMS44ODAyIDMuOTg3NyAxMS44NiA0LjUyNzEgQyAxMS43OTE5IDYuMzQzOCAxMS43NjQ0IDcuNTM5NSAxMS43NjQ0IDguMTcyMiBDIDExLjc2NDQgOC41Mzg0IDExLjk2NDIgOS4wOTk2IDEyLjU1NTUgOS4wOTk2IEMgMTMuNzEzNCA5LjA5OTYgMTQuMDk0IDguMTkyMiAxNC4xODM4IDYuMDU5NSBDIDE0LjE4ODUgNS4yNjQyIDE0LjE5MjcgNC41OTk3IDE0LjE5MjcgNC41OTk3IEMgMTMuNjY3OSA0LjU5OTcgMTMuNDA5NCA0LjMyNCAxMy40MDk0IDMuOTc5NSBDIDEzLjQwOTQgMy42MzUgMTMuNjgzIDMuMzE2MyAxNC4xMzIxIDMuMzE2MyBDIDE0LjEzMjEgMy4zMTYzIDE0LjEzMyAyLjExODIgMTQuMTMzIDEuNjIyIEMgMTQuMTMzIDEuMDU2OSAxNC41NzE1IDAuNTg4MyAxNS4xMzg4IDAuNTg4MyBDIDE1LjcwNjIgMC41ODgzIDE2LjE1NjcgMS4wNTY5IDE2LjE1NjcgMS42MjIgQyAxNi4xNTY3IDEuODA5NSAxNi4xNDk1IDIuMDI4IDE2LjE0MTYgMi4yNjk1IEMgMTYuMTMxNSAyLjU3ODQgMTYuMTIwMSAyLjkyNDYgMTYuMTIxIDMuMjkwOSBMIDE2LjIwMzIgMy4yOTA1IEggMTYuMjAzMiBDIDE2LjM1NyAzLjI5IDE2LjcwNTEgMy4yODg4IDE3LjE2ODEgMy4yODM0IEMgMTcuNzE5OCAzLjI3NjkgMTcuOTQ0NSAzLjU4NTEgMTcuOTQ0NSAzLjk3MDkgQyAxNy45NDQ1IDQuMzU2NyAxNy42NDc1IDQuNjI2IDE3LjI2MDIgNC42Mjc2IEMgMTYuOTAxMiA0LjYyOTEgMTYuMTA4MyA0LjYyNDcgMTYuMTA4MyA0LjYyNDcgQyAxNi4wNzIzIDUuNzY3NCAxNi4wMzgyIDcuMTQ1MSAxNi4wMzgyIDguMjQ3NSBDIDE2LjAzODIgOC42NDUxIDE2LjMxMjYgOS4wOTk1IDE2Ljk3NjcgOS4wOTk1IEMgMTguMzE2MyA5LjA5OTUgMTguODE2NyA3LjkwOTIgMTguOTE3MyA1LjY0OTggQyAxOC45MDk1IDQuMDc2NiAxOC44OTA3IDMuMTY1MyAxOC44NzY1IDIuNDc4NSBWIDIuNDc4NSBDIDE4Ljg2NjYgMS45OTY5IDE4Ljg1OSAxLjYyNTggMTguODU5IDEuMjE0MyBDIDE4Ljg1OSAwLjY0OTMgMTkuMzI5NSAwLjE0NDIgMTkuODk2NyAwLjE0NDIgQyAyMC40NjQxIDAuMTQ0MiAyMC44ODI2IDAuNTk3NyAyMC44ODI2IDEuMTYyNyBDIDIwLjg4MjYgMS41OTggMjAuODY1MSAyLjEwNjkgMjAuODQxMyAyLjgwMDkgViAyLjgwMDkgViAyLjgwMSBDIDIwLjgwMSAzLjk3NDcgMjAuNzQyNSA1LjY3NzggMjAuNzE5NSA4LjQ1MDQgQyAyMC43MTY1IDguODE5NSAyMC44OTY3IDkuMDc5NSAyMS4zNzQ4IDkuMDc5NSBDIDIyLjY1MjQgOS4wNzk1IDIzLjAwNjYgNy42OTU1IDIzLjExOSA1Ljc2MjUgQyAyMy4xMTk3IDUuNjY5NSAyMy4xMjA1IDUuNTc4NSAyMy4xMjE0IDUuNDg5MSBMIDIzLjEyMTQgNS40ODg3IEMgMjMuMTIzMSA1LjMwNTQgMjMuMTI0NyA1LjEyODkgMjMuMTI0NyA0Ljk1NjEgQyAyMy4xMjQ3IDQuMzkxIDIzLjUwMTEgMy45MzM3IDI0LjA2ODYgMy45MzM3IEMgMjQuNjM1OSAzLjkzMzcgMjQuOTY5NCA0LjQwMjIgMjQuOTY5NCA0Ljk2NzMgQyAyNC45Njk0IDUuMzY5OCAyNC45NTYyIDUuNzQ2NCAyNC45NDI3IDYuMTM0OCBDIDI0LjkzMDcgNi40Nzc3IDI0LjkxODQgNi44Mjk5IDI0LjkxNDYgNy4yMTc2IEMgMjQuOTA0NyA4LjIxNTEgMjUuMjQ1NSA5LjA5MzggMjYuMDc1NiA5LjA5MTQgQyAyNi44NzI2IDkuMDg5MSAyNy43NDc5IDguNzUzNiAyNy43NjkxIDcuMDQ1IEMgMjcuNzc1MSA2LjU3MDEgMjcuNzY4MyA2LjIwNTMgMjcuNzYxNSA1LjgzNzEgViA1LjgzNyBWIDUuODM2OSBWIDUuODM2OCBDIDI3Ljc1NjQgNS41NjQyIDI3Ljc1MTMgNS4yODk3IDI3Ljc1MTMgNC45NjczIEMgMjcuNzUxMyA0LjQwMjIgMjguMTQ1MSAzLjkzMzcgMjguNzEyNSAzLjkzMzcgQyAyOS4yNzk1IDMuOTMzNyAyOS42NzM3IDQuNDAyMiAyOS42NzM3IDQuOTY3MyBDIDI5LjY3MzcgNS4zMDUxIDI5LjY2MTQgNS42NDE1IDI5LjY0NzcgNi4wMTQ1IFYgNi4wMTQ1IFYgNi4wMTQ2IFYgNi4wMTQ2IEMgMjkuNjMwNyA2LjQ3ODMgMjkuNjExNyA2Ljk5ODQgMjkuNjExNyA3LjY0NzcgQyAyOS42MTE3IDcuNjQ3NyAyOS41NzY5IDEwLjAxNDEgMjkuNjYgMTAuNTM3OCBDIDI5LjkyMDMgMTAuNDUxMiAzMC4yOTU4IDEwLjE5NjggMzAuNjkzNSA5LjU4MDIgQyAzMC45MzM3IDkuMjA4IDMxLjM5MjggOS4xMjgyIDMxLjY3NTggOS4yOTMgQyAzMi4wNjUzIDkuNTIgMzIuMDUxNCA5Ljk2MzUgMzEuOTA1OCAxMC4yODc1IEMgMzEuNTI5OCAxMS4xMjM5IDMxLjA0MDkgMTEuNjM1OCAyOS44MDQ3IDEyLjA1OTUgQyAyOS44MDg2IDEzLjQ3ODIgMjkuNzA5OCAxNS41NzEzIDI3LjA4NjggMTUuOTQ5NiBDIDI0Ljg0MDUgMTYuMjczNSAyMy44MjQ0IDE0Ljk3MDggMjMuODIxMSAxMy44NjIzIEMgMjMuODE1NyAxMi4xMTIgMjUuNTY0OSAxMS42MDIyIDI4LjA4OTcgMTAuOTY2NSBMIDI4LjAwODcgMTAuMDk5IEMgMjguMDA4NyAxMC4wOTkgMjcuNDQ2NCAxMC44MzY0IDI2LjAyMTUgMTAuODAwOCBDIDI0LjkyMjMgMTAuNzczMyAyNC4xNjYzIDEwLjI1NDMgMjMuNzA3NyA5LjUyMTMgQyAyMy4xNzg3IDEwLjM5MDEgMjIuMzQ5NSAxMC44MTA1IDIxLjEwMDQgMTAuODEwNSBDIDIwLjI3NzUgMTAuODEwNSAxOS40OTM0IDEwLjM3NTggMTkuMTA1MSA5Ljc0NTcgQyAxOC41MzI1IDEwLjQzMDggMTcuNzMzOSAxMC44MDE1IDE2LjY2MDcgMTAuODAxNSBDIDE1LjcyNTYgMTAuODAxNSAxNS4wMzQ2IDEwLjQ3ODYgMTQuNjIwOSA5Ljk3NDYgQyAxNC4wODcgMTAuNTcxMiAxMy4zMTggMTAuODA2OCAxMi4yNDQ3IDEwLjgwNjggWiBNIDI4LjI1NDggMTIuMzYzIEMgMjYuOTc4NiAxMi42Mzg1IDI1LjM3OTggMTMuMDQwNyAyNS4zOTgzIDEzLjgyNjYgQyAyNS40MTU4IDE0LjU2MzYgMjYuMTc2NyAxNC42OTc3IDI2LjgxMTEgMTQuNTY2NiBDIDI4LjEyODYgMTQuMjk0MyAyOC4yODE2IDEzLjUwMTUgMjguMjU0OCAxMi4zNjMgWiBNIDExLjk3MDQgMS42MjQ5IEMgMTEuOTcwNCAxLjA1NDQgMTEuNTA3MyAwLjU5MzIgMTAuOTM0NyAwLjU5MzIgQyAxMC4zNjE5IDAuNTkzMiA5Ljg5ODkgMS4wNTQ0IDkuODk4OSAxLjYyNDkgQyA5Ljg5ODkgMi4xOTUzIDEwLjM2MTkgMi42NTY2IDEwLjkzNDcgMi42NTY2IEMgMTEuNTA3MyAyLjY1NjYgMTEuOTcwNCAyLjE5NTMgMTEuOTcwNCAxLjYyNDkgWiIgZmlsbD0nIzAwMDAwMCcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoNDU2LjAwMDAwMCwgNDkyLjAwMDAwMCkgc2NhbGUoMi4yNTAwMDAsIDIuMjUwMDAwKScgLz4KPC9nPgo8ZyBpZD0nY29ybmVycy1vdXRlci0xJyBzdHlsZT0nZmlsbDojMDAwMDAwJyA+CjxwYXRoIGQ9Ik0wLDBMMTYsMEwzMiwwTDQ4LDBMNjQsMEw4MCwwTDk2LDBMMTEyLDBMMTEyLDE2TDExMiwzMkwxMTIsNDhMMTEyLDY0TDExMiw4MEwxMTIsOTZMMTEyLDExMkw5NiwxMTJMODAsMTEyTDY0LDExMkw0OCwxMTJMMzIsMTEyTDE2LDExMkwwLDExMkwwLDk2TDAsODBMMCw2NEwwLDQ4TDAsMzJMMCwxNkwwLDBNMTYsMTZMMTYsMzJMMTYsNDhMMTYsNjRMMTYsODBMMTYsOTZMMzIsOTZMNDgsOTZMNjQsOTZMODAsOTZMOTYsOTZMOTYsODBMOTYsNjRMOTYsNDhMOTYsMzJMOTYsMTZMODAsMTZMNjQsMTZMNDgsMTZMMzIsMTZMMTYsMTZaIiAvPgo8L2c+CjxnIGlkPSdjb3JuZXJzLWlubmVyLTEnIHN0eWxlPSdmaWxsOiMwMDAwMDAnID4KPHBhdGggZD0iTTMyLDMyTDQ4LDMyTDY0LDMyTDgwLDMyTDgwLDQ4TDgwLDY0TDgwLDgwTDY0LDgwTDQ4LDgwTDMyLDgwTDMyLDY0TDMyLDQ4TDMyLDMyWiIgLz4KPC9nPgo8ZyBpZD0nY29ybmVycy1vdXRlci0yJyBzdHlsZT0nZmlsbDojMDAwMDAwJyA+CjxwYXRoIGQ9Ik00MTYsMEw0MzIsMEw0NDgsMEw0NjQsMEw0ODAsMEw0OTYsMEw1MTIsMEw1MjgsMEw1MjgsMTZMNTI4LDMyTDUyOCw0OEw1MjgsNjRMNTI4LDgwTDUyOCw5Nkw1MjgsMTEyTDUxMiwxMTJMNDk2LDExMkw0ODAsMTEyTDQ2NCwxMTJMNDQ4LDExMkw0MzIsMTEyTDQxNiwxMTJMNDE2LDk2TDQxNiw4MEw0MTYsNjRMNDE2LDQ4TDQxNiwzMkw0MTYsMTZMNDE2LDBNNDMyLDE2TDQzMiwzMkw0MzIsNDhMNDMyLDY0TDQzMiw4MEw0MzIsOTZMNDQ4LDk2TDQ2NCw5Nkw0ODAsOTZMNDk2LDk2TDUxMiw5Nkw1MTIsODBMNTEyLDY0TDUxMiw0OEw1MTIsMzJMNTEyLDE2TDQ5NiwxNkw0ODAsMTZMNDY0LDE2TDQ0OCwxNkw0MzIsMTZaIiAvPgo8L2c+CjxnIGlkPSdjb3JuZXJzLWlubmVyLTInIHN0eWxlPSdmaWxsOiMwMDAwMDAnID4KPHBhdGggZD0iTTQ0OCwzMkw0NjQsMzJMNDgwLDMyTDQ5NiwzMkw0OTYsNDhMNDk2LDY0TDQ5Niw4MEw0ODAsODBMNDY0LDgwTDQ0OCw4MEw0NDgsNjRMNDQ4LDQ4TDQ0OCwzMloiIC8+CjwvZz4KPGcgaWQ9J2Nvcm5lcnMtb3V0ZXItMycgc3R5bGU9J2ZpbGw6IzAwMDAwMCcgPgo8cGF0aCBkPSJNMCw0MTZMMTYsNDE2TDMyLDQxNkw0OCw0MTZMNjQsNDE2TDgwLDQxNkw5Niw0MTZMMTEyLDQxNkwxMTIsNDMyTDExMiw0NDhMMTEyLDQ2NEwxMTIsNDgwTDExMiw0OTZMMTEyLDUxMkwxMTIsNTI4TDk2LDUyOEw4MCw1MjhMNjQsNTI4TDQ4LDUyOEwzMiw1MjhMMTYsNTI4TDAsNTI4TDAsNTEyTDAsNDk2TDAsNDgwTDAsNDY0TDAsNDQ4TDAsNDMyTDAsNDE2TTE2LDQzMkwxNiw0NDhMMTYsNDY0TDE2LDQ4MEwxNiw0OTZMMTYsNTEyTDMyLDUxMkw0OCw1MTJMNjQsNTEyTDgwLDUxMkw5Niw1MTJMOTYsNDk2TDk2LDQ4MEw5Niw0NjRMOTYsNDQ4TDk2LDQzMkw4MCw0MzJMNjQsNDMyTDQ4LDQzMkwzMiw0MzJMMTYsNDMyWiIgLz4KPC9nPgo8ZyBpZD0nY29ybmVycy1pbm5lci0zJyBzdHlsZT0nZmlsbDojMDAwMDAwJyA+CjxwYXRoIGQ9Ik0zMiw0NDhMNDgsNDQ4TDY0LDQ0OEw4MCw0NDhMODAsNDY0TDgwLDQ4MEw4MCw0OTZMNjQsNDk2TDQ4LDQ5NkwzMiw0OTZMMzIsNDgwTDMyLDQ2NEwzMiw0NDhaIiAvPgo8L2c+Cjwvc3ZnPgo8ZyBpZD0iZnJhbWUtc2VjdGlvbnMiPgoJCQk8cGF0aCBmaWxsPSIjMDAwMDAwIiBkPSJNMjIyLDEwYTgsOCwwLDAsMSw4LDhWMjIyYTgsOCwwLDAsMS04LDhIMThhOCw4LDAsMCwxLTgtOFYxOGE4LDgsMCwwLDEsOC04SDIyMm0wLTEwSDE4QTE4LDE4LDAsMCwwLDAsMThWMjIyYTE4LDE4LDAsMCwwLDE4LDE4SDIyMmExOCwxOCwwLDAsMCwxOC0xOFYxOEExOCwxOCwwLDAsMCwyMjIsMFoiLz4KCQkJPC9nPgoJCQk8ZyBpZD0iZnJhbWUtdGV4dCI+CgkJCTx0ZXh0IGlkPSJmcmFtZS10ZXh0LXByaW1hcnkiIHg9IjEyMCIgeT0iMjgwIiBtYXhDaGFyYWN0ZXI9IjciIG1heEZvbnRTaXplPSI1MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjI5Ij5iaXQubHkvZmVzeXNkaXM8L3RleHQ+CgkJCTwvZz4KCQkJPC9zdmc+" width="375" />
+
+<br />
+<ul>
+<li>Telegram: <a href="https://t.me/vvscode">@vvscode</a></li>
+<li>Linkedin: <a href="https://www.linkedin.com/in/vvanchuk/">https://www.linkedin.com/in/vvanchuk/</a></li>
+</ul></script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"slideNumber":true,"hash":true,"history":false,"backgroundTransition":"fade","width":"80%","tableofcontents":{"title":"План","position":1000}}, queryOptions);
+    </script>
+
+    <script src="./_assets/plugins.js"></script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

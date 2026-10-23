@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Frontend System Design — обучение архитектуре фронтенда. Научитесь проектировать масштабируемую и поддерживаемую фронтенд-архитектуру шаг за шагом." />
+  <title>Frontend System Design — архитектура фронтенда с нуля</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --bg-soft: #161a23;
+      --card: #1c212e;
+      --border: #2a3040;
+      --text: #eef1f6;
+      --muted: #9aa3b5;
+      --accent: #6366f1;
+      --accent-strong: #818cf8;
+      --accent-soft: rgba(99, 102, 241, 0.14);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 64px 0 40px;
+      text-align: center;
+      background: radial-gradient(
+          1200px 500px at 50% -10%,
+          rgba(99, 102, 241, 0.22),
+          transparent 60%
+        ),
+        var(--bg);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: var(--accent-strong);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 6vw, 52px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 .accent {
+      background: linear-gradient(90deg, #818cf8, #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p.subtitle {
+      font-size: clamp(16px, 2.6vw, 20px);
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 auto 28px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 26px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease,
+        background 0.15s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-strong);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-soft);
+    }
+
+    /* Video */
+    .video-section {
+      padding: 8px 0 48px;
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-alt-link {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--muted);
+      text-align: center;
+      overflow-wrap: break-word;
+    }
+
+    .video-alt-link a {
+      color: var(--accent-strong);
+      text-decoration: none;
+    }
+
+    .video-alt-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Sections */
+    section.block {
+      padding: 40px 0;
+    }
+
+    .block h2 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .block .lead {
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 28px;
+    }
+
+    /* Cards grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .card .ico {
+      font-size: 20px;
+    }
+
+    /* Learning path list */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .step-body h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .step-body p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* Call to action */
+    .cta-panel {
+      text-align: center;
+      background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.2),
+          rgba(56, 189, 248, 0.12)
+        ),
+        var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 40px 24px;
+      margin: 16px 0 64px;
+    }
+
+    .cta-panel h2 {
+      margin-bottom: 12px;
+    }
+
+    .cta-panel p {
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 24px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 20px 40px;
+      color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--accent-strong);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <span class="badge">Обучение Frontend System Design</span>
+      <h1>Освой <span class="accent">Frontend System Design</span></h1>
+      <p class="subtitle">
+        Научись проектировать масштабируемую, поддерживаемую и быструю
+        архитектуру фронтенда — от требований до продакшена. Шаг за шагом.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="#path">Программа обучения</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Video -->
+  <section class="video-section" id="video">
+    <div class="container">
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/QjqM9ht7T5g"
+          title="Frontend System Design видео"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <p class="video-alt-link">
+        Не удалось загрузить видео? Смотри напрямую на YouTube:
+        <a href="https://www.youtube.com/watch?v=QjqM9ht7T5g" target="_blank" rel="noopener">https://www.youtube.com/watch?v=QjqM9ht7T5g</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Why -->
+  <section class="block" id="why">
+    <div class="container">
+      <h2>Почему Frontend System Design так важен</h2>
+      <p class="lead">
+        Современные веб-приложения ломаются не из-за синтаксиса, а из-за
+        архитектуры. System design — это навык, который отличает senior-инженера
+        от junior, и именно его проверяют на собеседованиях и в реальных продуктах.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <h3><span class="ico">🧭</span> Ясность</h3>
+          <p>Превращай расплывчатые требования в чёткую структуру, которую сможешь защитить.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">🚀</span> Производительность</h3>
+          <p>Проектируй под скорость и масштаб, чтобы приложение оставалось быстрым по мере роста.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">🛠️</span> Поддерживаемость</h3>
+          <p>Строй системы, которые команда сможет расширять, тестировать и рефакторить без страха.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">🎯</span> Готовность к собеседованиям</h3>
+          <p>Проходи раунды system design в топовых компаниях по проверенной методике.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Path -->
+  <section class="block" id="path">
+    <div class="container">
+      <h2>Программа обучения</h2>
+      <p class="lead">
+        Frontend System Design от основ до продвинутых тем. Восемь модулей,
+        которые закрывают всё, что нужно для уверенного проектирования архитектуры.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <h3><span class="ico">🎯</span> НФТ и процесс проектирования</h3>
+          <p>Как нефункциональные требования влияют на продукт, типовые вопросы, метрики (DAU/MAU, RPS), профиль пользователя и стейкхолдеры.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">🧱</span> Границы FE System Design</h3>
+          <p>Что влияет на работу фронтенда и какие технические аспекты закрываются дизайном приложения: CI/CD, деплой, сеть, тестирование.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">📝</span> RFC/ADR — артефакты проектирования</h3>
+          <p>Документирование архитектурных решений: назначение, масштаб и формат RFC/ADR-документов.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">💬</span> Интервью</h3>
+          <p>Критерии оценки, виды задач и уровни system design — от системы до отдельного компонента.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">🗺️</span> Верхнеуровневый дизайн</h3>
+          <p>Композиция систем и сужение задачи, внешние интеграции, способы доставки и деплоя.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">🔍</span> Технический кругозор</h3>
+          <p>Точки принятия решений, их мотиваторы и критерии, разница между greenfield и brownfield.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">🏗️</span> Архитектура приложения</h3>
+          <p>Компонентный дизайн и проектирование API, современные архитектуры (FSD vs MVC), сетевые взаимодействия (REST/RPC, SSE, WS), работа с состоянием.</p>
+        </div>
+        <div class="card">
+          <h3><span class="ico">⚡</span> Производительность и безопасность</h3>
+          <p>Масштабирование на пользователей и данные, кэширование, основные векторы атак и механизмы защиты.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="block">
+    <div class="container">
+      <div class="cta-panel">
+        <h2>Изучаешь Frontend System Design?</h2>
+        <p>
+          Подпишись в Telegram — там я делюсь материалами по архитектуре
+          фронтенда и анонсирую обучающие материалы.
+        </p>
+        <a class="btn btn-primary" href="https://t.me/vvscodex">✈️ Telegram: @vvscodex</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Frontend System Design · <a href="https://t.me/vvscodex">Telegram: @vvscodex</a></p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

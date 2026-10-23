@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black-modified.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Н~~ад~~ежность
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Василий @vvscode Ванчук 
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->сложное детство
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->пикапер
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->НЛП практик/мастер/тренер
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->занимался Эриксоновским гипнозом
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->психолог-психотерапевт
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->работаю в команде DX
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Вербальные смыслы
+
+Notes: разработчики формализуют требования, не важно пишут или читают код - но работают с текстом, смысл которого привязан к смыслу слов и их сочетаний
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Невербальное общение
+
+Notes: даже в разговоре по телефону мы способны замечать разницу, когда человек стоит - это про интонации и другие тонкие материи. Классика психологии- рассказы про то, что 80% информации человек получает из неформального общения
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Буба и кика
+
+Notes: Звукосимволизм - Участникам показывают округлую и угловатую фигуры и предлагают сопоставить их с придуманными словами. Большинство связывает «буба» с округлой формой, а «кики» — с угловатой. Классический предшественник — работа Вольфганга Кёлера 1929 года с парой слов, известной как «малума — такете». _The shape of a kiki: Sound symbolism affects production of figures_ (2026). В ней 40 участников слушали 20 выдуманных слов и рисовали соответствующие им фигуры, а не выбирали из готовых вариантов. Взрывные согласные и гласные переднего ряда чаще вызывали угловатые рисунки, сонорные согласные и гласные заднего ряда — округлые
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+mil и mal
+
+Notes: исследование Эдварда Сепира _A Study in Phonetic Symbolism_ (1929). Участникам предлагали псевдослова вроде _mil_ и _mal_: _mil_ чаще связывали с маленьким объектом, _mal_ — с большим. В основном эксперименте участвовали 464 школьника; предпочтение связывать гласную _a_ с большим размером, а _i_ — с маленьким наблюдалось более чем в 80% случаев в разных возрастных группах
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Психофизика - дело не только в звуках
+
+Notes: Ширина знаков — непосредственно различие между узкими и широкими буквами или начертаниями. Её влияние можно оценивать по точности распознавания букв. Зрительное скучивание — _visual crowding_: соседние буквы мешают распознавать друг друга. Эффективность чтения — оценка уже не отдельных букв, а чтения связного текста
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```js
+minimumwindowwidth
+minimumWindowWidth
+minimum_window_width
+
+calcMinWinW
+getMinimumWindowWidth
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Откуда ноги?
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->оценивают отдельные звуки и их сочетания
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->написание и внешний вид букв
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->влияние конкретных слов
+
+Notes:
+- оценивают отдельные звуки и их сочетания (и далее выводы по их сочетанию)
+- написание букв (плотность, ширина, разряженность) - лигатуры тоже влияют
+- влияние конктретных слов (Destroy / Delete / Annigilate)
+- состав слов из букв
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Как это исследуют
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->тесты с выбором
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->свободная форма оценки
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->МРТ  (семантический атлас мозга)
+
+Notes: 39 707 английских слов / понятий 3 500
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+ВААЛ
+
+`Массив` и `Структура`
+
+Notes:  Попробуйте произнести их: «мас-сив» и «струк-ту-ра». Здесь можно проверить предполагаемый контраст более плавного звучания и плотных сочетаний `стр` и `кт`
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+PAP
+
+> Why 'piss' is ruder than 'pee'?
+
+Notes: каждому звуку назначают оценку на основе эмоциональных рейтингов слов, в которых он встречается. Затем объединяют оценки звуков нового слова — отдельно для приятности и возбуждающего характера. те же Ruby-методы `map()` и `collect()` выполняют одинаковую операцию, но звучат по-разному. Это удобная пара для проверки: **назначение совпадает, звуковой состав различается**. Однако исходная PAP построена на немецком материале — для английских имён нужна отдельная проверка применимости.
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+QUOKY
+
+`Yup` и `Zod`
+
+Notes: предсказывает приятность придуманных английских слов. Есть вариант по одним буквам и варианты, учитывающие эмоциональные оценки похожих настоящих слов
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+К чему это
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+При чем тут холодильник?
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+В ваших силах
+</div></script></section></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+		  ElapsedTimeBar
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{id: 'toggle-overview',
+				title: 'Toggle overview (O)',
+				icon: '<i class="fa fa-th"></i>',
+				action: 'Reveal.toggleOverview();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
